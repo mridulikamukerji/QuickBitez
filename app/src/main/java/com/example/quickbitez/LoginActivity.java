@@ -1,66 +1,67 @@
 package com.example.quickbitez;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity {
-
-    DatabaseHelper dbHelper;
-    private boolean isCaterer = false; // Default: Student login
+public class LoginActivity extends Activity {
+    private EditText emailInput, passwordInput;
+    private Button loginButton, signUpButton;
+    private Switch userTypeSwitch;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        dbHelper = new DatabaseHelper(this);
-        EditText emailInput = findViewById(R.id.emailInput);
-        EditText passwordInput = findViewById(R.id.passwordInput);
-        Button loginButton = findViewById(R.id.loginButton);
-        Button signUpButton = findViewById(R.id.signUpButton);
-        Switch userTypeSwitch = findViewById(R.id.userTypeSwitch);
+        databaseHelper = new DatabaseHelper(this);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        loginButton = findViewById(R.id.loginButton);
+        signUpButton = findViewById(R.id.signUpButton);
+        userTypeSwitch = findViewById(R.id.userTypeSwitch);
 
-        // Toggle between Student and Caterer
-        userTypeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> isCaterer = isChecked);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = emailInput.getText().toString().trim();
-                String password = passwordInput.getText().toString().trim();
-                String role = isCaterer ? "Caterer" : "Student";
-
-                if (isValidEmail(email, role) && !password.isEmpty()) {
-                    if (dbHelper.validateUser(email, password, role)) {
-                        Toast.makeText(LoginActivity.this, "Logging in as " + role + "...", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this, "Enter a valid email and password", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        signUpButton.setOnClickListener(v -> {
+        loginButton.setOnClickListener(view -> loginUser());
+        signUpButton.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
     }
 
-    private boolean isValidEmail(String email, String role) {
-        if (role.equals("Student")) {
-            return email.endsWith("@nmims.in"); // Only students need to have @nmims.in
+    private void loginUser() {
+        String email = emailInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+        boolean isCaterer = userTypeSwitch.isChecked();
+        String expectedRole = isCaterer ? "Caterer" : "Customer";
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Email and Password are required", Toast.LENGTH_SHORT).show();
+            return;
         }
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches(); // Caterers need any valid email
+
+        Cursor cursor = databaseHelper.getUserByEmail(email);
+        if (cursor != null && cursor.moveToFirst()) {
+            String storedPassword = cursor.getString(cursor.getColumnIndex("password"));
+            String storedRole = cursor.getString(cursor.getColumnIndex("role"));
+
+            if (storedPassword.equals(password) && storedRole.equals(expectedRole)) {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = isCaterer ? new Intent(this, CatererDashboard.class) : new Intent(this, CustomerDashboard.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Invalid credentials or role mismatch", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+        }
     }
 }
