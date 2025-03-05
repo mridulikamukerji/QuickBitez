@@ -2,14 +2,13 @@ package com.example.quickbitez;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
+import java.util.HashMap;
 
 public class LoginActivity extends Activity {
     private EditText emailInput, passwordInput;
@@ -47,14 +46,26 @@ public class LoginActivity extends Activity {
             return;
         }
 
-        Cursor cursor = databaseHelper.getUserByEmail(email);
-        if (cursor != null && cursor.moveToFirst()) {
-            String storedPassword = cursor.getString(cursor.getColumnIndex("password"));
-            String storedRole = cursor.getString(cursor.getColumnIndex("role"));
+        HashMap<String, String> userData = databaseHelper.getUserByEmail(email);
 
-            if (storedPassword.equals(password) && storedRole.equals(expectedRole)) {
+        if (userData != null && !userData.isEmpty()) {
+            String storedPassword = userData.get("password");
+            String storedRole = userData.get("role");
+
+            if (storedPassword != null && storedPassword.equals(password) && storedRole != null && storedRole.equals(expectedRole)) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = isCaterer ? new Intent(this, CatererDashboard.class) : new Intent(this, CustomerDashboard.class);
+
+                Intent intent;
+                if (isCaterer) {
+                    intent = new Intent(this, CatererDashboard.class);
+                } else {
+                    intent = new Intent(this, CustomerDashboard.class);
+                    String dietaryPreferences = userData.get("dietaryPreferences");
+                    String allergies = userData.get("allergies");
+                    intent.putExtra("dietaryPreferences", dietaryPreferences != null ? dietaryPreferences : "");
+                    intent.putExtra("allergies", allergies != null ? allergies : "");
+                }
+
                 startActivity(intent);
                 finish();
             } else {

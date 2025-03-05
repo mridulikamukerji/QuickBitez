@@ -1,4 +1,4 @@
-package com.example.foodapp;
+package com.example.quickbitez;
 
 import android.os.Bundle;
 import android.widget.ImageView;
