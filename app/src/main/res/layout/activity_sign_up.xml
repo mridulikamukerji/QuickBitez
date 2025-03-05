@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textColor="#F5E7D3"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:textColor="#F5E7D3"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+            <Switch
+                android:id="@+id/userTypeSwitch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Caterer"
+                android:textColor="#F5E7D3"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_default_profile"
+            android:layout_marginBottom="10dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_background"/>
+
+        <Button
+            android:id="@+id/uploadProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Profile Picture"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/black"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Full Name"
+            android:textColorHint="#AFAFAF"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter your email"
+            android:textColorHint="#AFAFAF"
+            android:textColor="#FFFFFF"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:textColorHint="#AFAFAF"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Create a password"
+            android:inputType="textPassword"
+            android:textColorHint="#AFAFAF"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/businessDetails"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Business Name (For Caterers)"
+            android:textColorHint="#AFAFAF"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/businessAddress"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Business Address (For Caterers)"
+            android:textColorHint="#AFAFAF"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="313dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="Sign Up"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</ScrollView>
