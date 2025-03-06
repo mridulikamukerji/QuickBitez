@@ -32,50 +32,66 @@ public class LoginActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         buttonLogin.setOnClickListener(v -> {
-            String email = editTextEmail.getText().toString().trim();
-            String password = editTextPassword.getText().toString().trim();
-            boolean isCaterer = userTypeSwitch.isChecked();
+            try {
+                String email = editTextEmail.getText().toString().trim();
+                String password = editTextPassword.getText().toString().trim();
+                boolean isCaterer = userTypeSwitch.isChecked();
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+                Log.d("LoginActivity", "Attempting login with email: " + email + ", isCaterer: " + isCaterer);
 
-            Cursor cursor = databaseHelper.getUser(email, password);
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            if (cursor == null) {
-                Toast.makeText(LoginActivity.this, "Error: Cursor is null", Toast.LENGTH_SHORT).show();
-            } else if (!cursor.moveToFirst()) {
-                Toast.makeText(LoginActivity.this, "No user found with provided credentials", Toast.LENGTH_SHORT).show();
-            } else {
+                Cursor cursor = databaseHelper.getUser(email, password);
+                if (cursor == null) {
+                    Log.e("LoginActivity", "Database query returned a null cursor");
+                    Toast.makeText(LoginActivity.this, "Database error occurred", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!cursor.moveToFirst()) {
+                    Log.e("LoginActivity", "No user found with provided credentials");
+                    Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 int userTypeIndex = cursor.getColumnIndex("userType");
                 if (userTypeIndex == -1) {
-                    Toast.makeText(LoginActivity.this, "Error: 'userType' column not found", Toast.LENGTH_SHORT).show();
-                    Log.e("LoginActivity", "'userType' column not found in cursor");
-                } else {
-                    String userType = cursor.getString(userTypeIndex);
+                    Log.e("LoginActivity", "'userType' column not found in database");
+                    Toast.makeText(LoginActivity.this, "Database error: 'userType' column missing", Toast.LENGTH_SHORT).show();
                     cursor.close();
-
-                    if (isCaterer && "Caterer".equals(userType)) {
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        Log.d("LoginActivity", "Navigating to CatererDashboard");
-                        Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
-                        startActivity(intent);
-                        // finish();
-                    } else if (!isCaterer && "Customer".equals(userType)) {
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        Log.d("LoginActivity", "Navigating to CustomerDashboard");
-                        Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
-                        startActivity(intent);
-                        // finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid user type or switch state", Toast.LENGTH_SHORT).show();
-                    }
+                    return;
                 }
+
+                String userType = cursor.getString(userTypeIndex);
+                Log.d("LoginActivity", "Fetched userType from database: " + userType);
+                cursor.close();
+
+                // Verify if the selected switch matches the user type
+                if (isCaterer && "Caterer".equals(userType)) {
+                    Log.d("LoginActivity", "Redirecting to CatererDashboard");
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
+                    startActivity(intent);
+                } else if (!isCaterer && "Customer".equals(userType)) {
+                    Log.d("LoginActivity", "Redirecting to CustomerDashboard");
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
+                    startActivity(intent);
+                } else {
+                    Log.e("LoginActivity", "User type mismatch: isCaterer=" + isCaterer + ", userType=" + userType);
+                    Toast.makeText(LoginActivity.this, "Incorrect user type selection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Log.e("LoginActivity", "Exception occurred during login", e);
+                Toast.makeText(LoginActivity.this, "An unexpected error occurred", Toast.LENGTH_SHORT).show();
             }
         });
 
         textViewRegister.setOnClickListener(v -> {
+            Log.d("LoginActivity", "Navigating to SignUpActivity");
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
