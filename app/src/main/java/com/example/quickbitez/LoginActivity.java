@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private Button buttonLogin;
     private TextView textViewRegister;
+    private Switch userTypeSwitch;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -25,11 +27,13 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.passwordInput);
         buttonLogin = findViewById(R.id.loginButton);
         textViewRegister = findViewById(R.id.signUpButton);
+        userTypeSwitch = findViewById(R.id.userTypeSwitch);
         databaseHelper = new DatabaseHelper(this);
 
         buttonLogin.setOnClickListener(v -> {
             String email = editTextEmail.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
+            boolean isCaterer = userTypeSwitch.isChecked();
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
@@ -43,19 +47,25 @@ public class LoginActivity extends AppCompatActivity {
             } else if (!cursor.moveToFirst()) {
                 Toast.makeText(LoginActivity.this, "No user found with provided credentials", Toast.LENGTH_SHORT).show();
             } else {
-                String userType = cursor.getString(cursor.getColumnIndex("userType"));
-                cursor.close();
-
-                if ("Customer".equals(userType)) {
-                    Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
-                    startActivity(intent);
-                    finish();
-                } else if ("Caterer".equals(userType)) {
-                    Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
-                    startActivity(intent);
-                    finish();
+                int userTypeIndex = cursor.getColumnIndex("userType");
+                if (userTypeIndex == -1) {
+                    Toast.makeText(LoginActivity.this, "Error: 'userType' column not found", Toast.LENGTH_SHORT).show();
+                    Log.e("LoginActivity", "'userType' column not found in cursor");
                 } else {
-                    Toast.makeText(LoginActivity.this, "Unknown user type", Toast.LENGTH_SHORT).show();
+                    String userType = cursor.getString(userTypeIndex);
+                    cursor.close();
+
+                    if ("Customer".equals(userType) && !isCaterer) {
+                        Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
+                        startActivity(intent);
+                        finish();
+                    } else if ("Caterer".equals(userType) && isCaterer) {
+                        Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Invalid user type or switch state", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
