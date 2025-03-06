@@ -1,19 +1,19 @@
 package com.example.quickbitez;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
-import java.util.HashMap;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends Activity {
-    private EditText emailInput, passwordInput;
-    private Button loginButton, signUpButton;
-    private Switch userTypeSwitch;
+public class LoginActivity extends AppCompatActivity {
+    private EditText editTextEmail, editTextPassword;
+    private Button buttonLogin;
+    private TextView textViewRegister;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -21,58 +21,48 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        editTextEmail = findViewById(R.id.emailInput);
+        editTextPassword = findViewById(R.id.passwordInput);
+        buttonLogin = findViewById(R.id.loginButton);
+        textViewRegister = findViewById(R.id.signUpButton);
         databaseHelper = new DatabaseHelper(this);
-        emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
-        loginButton = findViewById(R.id.loginButton);
-        signUpButton = findViewById(R.id.signUpButton);
-        userTypeSwitch = findViewById(R.id.userTypeSwitch);
 
-        loginButton.setOnClickListener(view -> loginUser());
-        signUpButton.setOnClickListener(view -> {
+        buttonLogin.setOnClickListener(v -> {
+            String email = editTextEmail.getText().toString().trim();
+            String password = editTextPassword.getText().toString().trim();
+
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Cursor cursor = databaseHelper.getUser(email, password);
+
+            if (cursor == null) {
+                Toast.makeText(LoginActivity.this, "Error: Cursor is null", Toast.LENGTH_SHORT).show();
+            } else if (!cursor.moveToFirst()) {
+                Toast.makeText(LoginActivity.this, "No user found with provided credentials", Toast.LENGTH_SHORT).show();
+            } else {
+                String userType = cursor.getString(cursor.getColumnIndex("userType"));
+                cursor.close();
+
+                if ("Customer".equals(userType)) {
+                    Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
+                    startActivity(intent);
+                    finish();
+                } else if ("Caterer".equals(userType)) {
+                    Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Unknown user type", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        textViewRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
-    }
-
-    private void loginUser() {
-        String email = emailInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
-        boolean isCaterer = userTypeSwitch.isChecked();
-        String expectedRole = isCaterer ? "Caterer" : "Customer";
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Email and Password are required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        HashMap<String, String> userData = databaseHelper.getUserByEmail(email);
-
-        if (userData != null && !userData.isEmpty()) {
-            String storedPassword = userData.get("password");
-            String storedRole = userData.get("role");
-
-            if (storedPassword != null && storedPassword.equals(password) && storedRole != null && storedRole.equals(expectedRole)) {
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-                Intent intent;
-                if (isCaterer) {
-                    intent = new Intent(this, CatererDashboard.class);
-                } else {
-                    intent = new Intent(this, CustomerDashboard.class);
-                    String dietaryPreferences = userData.get("dietaryPreferences");
-                    String allergies = userData.get("allergies");
-                    intent.putExtra("dietaryPreferences", dietaryPreferences != null ? dietaryPreferences : "");
-                    intent.putExtra("allergies", allergies != null ? allergies : "");
-                }
-
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(this, "Invalid credentials or role mismatch", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-        }
     }
 }

@@ -58,6 +58,7 @@
             android:layout_height="120dp"
             android:src="@drawable/default_profile_picture"
             android:background="@drawable/circle_background"
+            android:outlineProvider="background"
             android:scaleType="centerCrop"
             android:clipToOutline="true"
             android:elevation="4dp"
@@ -68,8 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Upload Profile Picture"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="@color/black"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
             android:layout_marginBottom="20dp"/>
 
         <EditText
@@ -111,52 +112,68 @@
             android:textColor="#FFFFFF"
             android:layout_marginBottom="20dp"/>
 
-        <EditText
-            android:id="@+id/dietaryPreferences"
+        <!-- Customer Fields -->
+        <LinearLayout
+            android:id="@+id/customerFields"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Dietary Preferences (For Customers)"
-            android:textColorHint="#AFAFAF"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <EditText
-            android:id="@+id/allergies"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Allergies (For Customers)"
-            android:textColorHint="#AFAFAF"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone"/>
+            <EditText
+                android:id="@+id/dietaryPreferences"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Dietary Preferences (For Customers)"
+                android:textColorHint="#AFAFAF"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
 
-        <EditText
-            android:id="@+id/businessDetails"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Business Name (For Caterers)"
-            android:textColorHint="#AFAFAF"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone"/>
+            <EditText
+                android:id="@+id/allergies"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Allergies (For Customers)"
+                android:textColorHint="#AFAFAF"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/businessAddress"
+        <!-- Caterer Fields -->
+        <LinearLayout
+            android:id="@+id/catererFields"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Business Address (For Caterers)"
-            android:textColorHint="#AFAFAF"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/businessDetails"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Business Name (For Caterers)"
+                android:textColorHint="#AFAFAF"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
+
+            <EditText
+                android:id="@+id/businessAddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Business Address (For Caterers)"
+                android:textColorHint="#AFAFAF"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/registerButton"
-            android:layout_width="313dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:text="Sign Up"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:padding="12dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
 </ScrollView>

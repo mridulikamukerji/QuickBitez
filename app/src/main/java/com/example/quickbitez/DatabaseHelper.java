@@ -6,34 +6,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import java.util.HashMap;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "QuickBites.db";
+    private static final int DATABASE_VERSION = 2;
 
-    private static final String DATABASE_NAME = "UserDatabase.db";
-    private static final int DATABASE_VERSION = 3; // Updated version
-
-    // Users Table
-    private static final String TABLE_USERS = "users";
-    private static final String COLUMN_USER_ID = "id";
-    private static final String COLUMN_FULL_NAME = "full_name";
-    private static final String COLUMN_EMAIL = "email";
-    private static final String COLUMN_PHONE = "phone";
-    private static final String COLUMN_PASSWORD = "password";
-    private static final String COLUMN_USER_TYPE = "user_type"; // Student or Caterer
-    private static final String COLUMN_PROFILE_PICTURE = "profile_picture"; // Now a BLOB
-
-    // Customers Table
-    private static final String TABLE_CUSTOMERS = "customers";
-    private static final String COLUMN_CUSTOMER_ID = "customer_id";
-    private static final String COLUMN_DIETARY_PREFERENCES = "dietary_preferences";
-    private static final String COLUMN_ALLERGIES = "allergies";
-
-    // Caterers Table
-    private static final String TABLE_CATERERS = "caterers";
-    private static final String COLUMN_CATERER_ID = "caterer_id";
-    private static final String COLUMN_BUSINESS_NAME = "business_name";
-    private static final String COLUMN_BUSINESS_ADDRESS = "business_address";
+    private static final String TABLE_USERS = "Users";
+    private static final String TABLE_CUSTOMER = "Customer";
+    private static final String TABLE_CATERER = "Caterer";
+    private static final String TABLE_PROFILE_PHOTO = "ProfilePhoto";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,64 +23,75 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + " ("
-                + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_FULL_NAME + " TEXT, "
-                + COLUMN_EMAIL + " TEXT UNIQUE, "
-                + COLUMN_PHONE + " TEXT, "
-                + COLUMN_PASSWORD + " TEXT, "
-                + COLUMN_USER_TYPE + " TEXT, "
-                + COLUMN_PROFILE_PICTURE + " BLOB)";
-        db.execSQL(CREATE_USERS_TABLE);
+        String createUsersTable = "CREATE TABLE " + TABLE_USERS + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "email TEXT UNIQUE, " +
+                "password TEXT, " +
+                "userType TEXT)";
 
-        String CREATE_CUSTOMERS_TABLE = "CREATE TABLE " + TABLE_CUSTOMERS + " ("
-                + COLUMN_CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_USER_ID + " INTEGER, "
-                + COLUMN_DIETARY_PREFERENCES + " TEXT, "
-                + COLUMN_ALLERGIES + " TEXT, "
-                + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "))";
-        db.execSQL(CREATE_CUSTOMERS_TABLE);
+        String createCustomerTable = "CREATE TABLE " + TABLE_CUSTOMER + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "user_id INTEGER, " +
+                "dietary_preferences TEXT, " +
+                "allergies TEXT, " +
+                "FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE)";
 
-        String CREATE_CATERERS_TABLE = "CREATE TABLE " + TABLE_CATERERS + " ("
-                + COLUMN_CATERER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_USER_ID + " INTEGER, "
-                + COLUMN_BUSINESS_NAME + " TEXT, "
-                + COLUMN_BUSINESS_ADDRESS + " TEXT, "
-                + "FOREIGN KEY(" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "))";
-        db.execSQL(CREATE_CATERERS_TABLE);
+        String createCatererTable = "CREATE TABLE " + TABLE_CATERER + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "user_id INTEGER, " +
+                "businessName TEXT, " +
+                "businessAddress TEXT, " +
+                "FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE)";
+
+        String createProfilePhotoTable = "CREATE TABLE " + TABLE_PROFILE_PHOTO + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "user_id INTEGER, " +
+                "photo BLOB, " +
+                "FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE)";
+
+        db.execSQL(createUsersTable);
+        db.execSQL(createCustomerTable);
+        db.execSQL(createCatererTable);
+        db.execSQL(createProfilePhotoTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILE_PHOTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATERER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATERERS);
         onCreate(db);
     }
 
-    public boolean insertUser(String fullName, String email, String phone, String password, String userType, byte[] profilePicture) {
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+
+    public boolean insertUser(String email, String password, String userType) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_FULL_NAME, fullName);
-        values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_PHONE, phone);
-        values.put(COLUMN_PASSWORD, password);
-        values.put(COLUMN_USER_TYPE, userType);
-        values.put(COLUMN_PROFILE_PICTURE, profilePicture);
+        values.put("email", email);
+        values.put("password", password); // Store password as plaintext (for now)
+        values.put("userType", userType);
+
         long result = db.insert(TABLE_USERS, null, values);
         return result != -1;
     }
 
-    public HashMap<String, String> getUserByEmail(String email) {
+    public Cursor getUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + " = ?", new String[]{email});
-
-        HashMap<String, String> userData = new HashMap<>();
-        if (cursor.moveToFirst()) {
-            userData.put("full_name", cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULL_NAME)));
-            userData.put("phone", cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)));
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE email = ? AND password = ?", new String[]{email, password});
+            if (cursor != null && cursor.moveToFirst()) {
+                return cursor;
+            }
+        } catch (Exception e) {
+            Log.e("DatabaseHelper", "Error fetching user", e);
         }
-        cursor.close();
-        return userData;
+        return null;
     }
 }

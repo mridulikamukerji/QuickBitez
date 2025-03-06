@@ -383,7 +383,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/menuImage"
+                android:src="@drawable/menu_image"
                 android:tint="@color/gold"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter"/>
@@ -413,7 +413,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/cartImage"
+                android:src="@drawable/cart_image"
                 android:tint="@color/gold"
                 android:layout_gravity="center_horizontal"/>
 
@@ -443,7 +443,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/profileImage"
+                android:src="@drawable/profile_image"
                 android:tint="@color/gold"
                 android:layout_gravity="center_horizontal"/>
 
