@@ -110,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
         long userId = db.insert("Users", null, userValues);
 
         if (userId == -1) {
-            Toast.makeText(this, "User registration failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User registration failed: Email might already be in use", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -119,20 +119,35 @@ public class SignUpActivity extends AppCompatActivity {
             catererValues.put("user_id", userId);
             catererValues.put("businessName", businessDetails.getText().toString());
             catererValues.put("businessAddress", businessAddress.getText().toString());
-            db.insert("Caterer", null, catererValues);
+            long catererId = db.insert("Caterer", null, catererValues);
+
+            if (catererId == -1) {
+                Toast.makeText(this, "Caterer registration failed", Toast.LENGTH_SHORT).show();
+                return;
+            }
         } else {
             ContentValues customerValues = new ContentValues();
             customerValues.put("user_id", userId);
             customerValues.put("dietary_preferences", dietaryPreferences.getText().toString());
             customerValues.put("allergies", allergies.getText().toString());
-            db.insert("Customer", null, customerValues);
+            long customerId = db.insert("Customer", null, customerValues);
+
+            if (customerId == -1) {
+                Toast.makeText(this, "Customer registration failed", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         if (profileImage != null) {
             ContentValues imageValues = new ContentValues();
             imageValues.put("user_id", userId);
             imageValues.put("photo", profileImage);
-            db.insert("ProfilePhoto", null, imageValues);
+            long photoId = db.insert("ProfilePhoto", null, imageValues);
+
+            if (photoId == -1) {
+                Toast.makeText(this, "Profile photo upload failed", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();

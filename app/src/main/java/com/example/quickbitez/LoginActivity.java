@@ -56,14 +56,18 @@ public class LoginActivity extends AppCompatActivity {
                     String userType = cursor.getString(userTypeIndex);
                     cursor.close();
 
-                    if ("Customer".equals(userType) && !isCaterer) {
-                        Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
-                        startActivity(intent);
-                        finish();
-                    } else if ("Caterer".equals(userType) && isCaterer) {
+                    if (isCaterer && "Caterer".equals(userType)) {
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Log.d("LoginActivity", "Navigating to CatererDashboard");
                         Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
                         startActivity(intent);
-                        finish();
+                        // finish();
+                    } else if (!isCaterer && "Customer".equals(userType)) {
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Log.d("LoginActivity", "Navigating to CustomerDashboard");
+                        Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
+                        startActivity(intent);
+                        // finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Invalid user type or switch state", Toast.LENGTH_SHORT).show();
                     }

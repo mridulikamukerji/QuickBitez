@@ -12,12 +12,5 @@ public class CatererDashboard extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caterer_dashboard);
 
-        Button logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 }
