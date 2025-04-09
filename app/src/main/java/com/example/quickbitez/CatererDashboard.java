@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.*;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -55,7 +54,7 @@ public class CatererDashboard extends Activity {
         navSettings.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));
         navViewFeedback.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));
         navLogout.setOnClickListener(v -> {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 

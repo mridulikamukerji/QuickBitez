@@ -67,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATERER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS SliderItems"); // ✅ Add this to prevent crash
         onCreate(db);
     }
 
@@ -113,11 +114,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Get all slider items
     public Cursor getAllSliderItems() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM SliderItems", null);
-    }
-
-    public Cursor getAllCatererItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM SliderItems", null);
     }

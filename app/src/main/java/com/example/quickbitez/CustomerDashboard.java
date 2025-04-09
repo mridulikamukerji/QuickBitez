@@ -58,28 +58,5 @@ public class CustomerDashboard extends AppCompatActivity {
             startActivity(new Intent(CustomerDashboard.this, LoginActivity.class));
             finish();
         });
-
-        // Initialize image slider
-        imageSlider = findViewById(R.id.imageSlider);
-        dbHelper = new DatabaseHelper(this);
-
-        List<SliderItem> sliderItems = getSliderItemsFromDB();
-        sliderAdapter = new SliderAdapter(sliderItems);
-        imageSlider.setAdapter(sliderAdapter);
-    }
-
-    private List<SliderItem> getSliderItemsFromDB() {
-        List<SliderItem> items = new ArrayList<>();
-        Cursor cursor = dbHelper.getAllCatererItems();
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
-                Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                items.add(new SliderItem(imageBitmap, name));
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return items;
     }
 }
