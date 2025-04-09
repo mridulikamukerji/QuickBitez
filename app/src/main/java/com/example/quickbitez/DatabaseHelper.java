@@ -117,7 +117,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM SliderItems", null);
     }
 
-    // ✅ NEW FUNCTION: get all caterer items (for customer image slider)
     public Cursor getAllCatererItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM SliderItems", null);

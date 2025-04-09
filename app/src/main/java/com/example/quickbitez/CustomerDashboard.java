@@ -43,7 +43,6 @@ public class CustomerDashboard extends AppCompatActivity {
         });
 
         navHome = findViewById(R.id.navHome);
-        navYourProfile = findViewById(R.id.navYourProfile);
         navFavourites = findViewById(R.id.navFavourites);
         navPastOrders = findViewById(R.id.navPastOrders);
         navSettings = findViewById(R.id.navSettings);
@@ -51,7 +50,6 @@ public class CustomerDashboard extends AppCompatActivity {
         navLogout = findViewById(R.id.navLogout);
 
         navHome.setOnClickListener(v -> startActivity(new Intent(CustomerDashboard.this, CustomerDashboard.class)));
-        navYourProfile.setOnClickListener(v -> startActivity(new Intent(CustomerDashboard.this, CustomerDashboard.class)));
         navFavourites.setOnClickListener(v -> startActivity(new Intent(CustomerDashboard.this, CustomerDashboard.class)));
         navPastOrders.setOnClickListener(v -> startActivity(new Intent(CustomerDashboard.this, CustomerDashboard.class)));
         navSettings.setOnClickListener(v -> startActivity(new Intent(CustomerDashboard.this, CustomerDashboard.class)));

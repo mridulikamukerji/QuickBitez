@@ -18,7 +18,7 @@ import java.io.IOException;
 public class CatererDashboard extends Activity {
     DrawerLayout drawerLayout;
     ImageButton navButton;
-    Button navHome, navYourProfile, navPastOrders, navSettings, navViewFeedback, navLogout;
+    Button navHome, navPastOrders, navSettings, navViewFeedback, navLogout;
     Button btnAddItem;
     DatabaseHelper dbHelper;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -42,7 +42,6 @@ public class CatererDashboard extends Activity {
         });
 
         navHome = findViewById(R.id.navHome);
-        navYourProfile = findViewById(R.id.navYourProfile);
         navPastOrders = findViewById(R.id.navPastOrders);
         navSettings = findViewById(R.id.navSettings);
         navViewFeedback = findViewById(R.id.navViewFeedback);
@@ -52,7 +51,6 @@ public class CatererDashboard extends Activity {
         dbHelper = new DatabaseHelper(this);
 
         navHome.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));
-        navYourProfile.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));
         navPastOrders.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));
         navSettings.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));
         navViewFeedback.setOnClickListener(v -> startActivity(new Intent(this, CatererDashboard.class)));

@@ -479,7 +479,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="Options"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -492,14 +492,6 @@
             android:backgroundTint="@color/maroon"
             android:textColor="@color/white"
             android:text="Home" />
-
-        <Button
-            android:id="@+id/navYourProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/maroon"
-            android:textColor="@color/white"
-            android:text="Your Profile" />
 
         <Button
             android:id="@+id/navFavourites"
