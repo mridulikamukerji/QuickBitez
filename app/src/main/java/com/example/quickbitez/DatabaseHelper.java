@@ -49,10 +49,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "photo BLOB, " +
                 "FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE)";
 
+        String createSliderItemsTable = "CREATE TABLE SliderItems (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "image BLOB, " +
+                "name TEXT)";
+
         db.execSQL(createUsersTable);
         db.execSQL(createCustomerTable);
         db.execSQL(createCatererTable);
         db.execSQL(createProfilePhotoTable);
+        db.execSQL(createSliderItemsTable);
     }
 
     @Override
@@ -93,5 +99,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("DatabaseHelper", "Error fetching user", e);
         }
         return null;
+    }
+
+    // Insert a new slider item
+    public boolean insertSliderItem(byte[] image, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("image", image);
+        values.put("name", name);
+        long result = db.insert("SliderItems", null, values);
+        return result != -1;
+    }
+
+    // Get all slider items
+    public Cursor getAllSliderItems() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM SliderItems", null);
+    }
+
+    // ✅ NEW FUNCTION: get all caterer items (for customer image slider)
+    public Cursor getAllCatererItems() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM SliderItems", null);
     }
 }

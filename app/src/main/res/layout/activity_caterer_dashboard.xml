@@ -1,460 +1,545 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#450000">
+    android:layout_height="match_parent">
 
-    <!-- Header Section -->
+    <!-- Main content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/black"
-        android:padding="8dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/maroon">
 
-        <!-- Navigation Menu Button -->
-        <ImageButton
-            android:id="@+id/navButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_menu"
-            android:layout_alignParentStart="true"
-            android:contentDescription="Menu Button"
-            android:scaleType="fitCenter"
-            android:background="@null"/>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#450000">
 
-        <!-- Welcome Text -->
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome to QuickBites!"
-            android:textSize="25sp"
-            android:textColor="@color/gold"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="9dp"
-            android:textStyle="bold"/>
+            <!-- Header Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/black"
+                android:padding="8dp"
+                android:orientation="horizontal">
+
+                <!-- Navigation Menu Button -->
+                <ImageButton
+                    android:id="@+id/navButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_menu"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="Menu Button"
+                    android:scaleType="fitCenter"
+                    android:background="@null"/>
+
+                <!-- Welcome Text -->
+                <TextView
+                    android:id="@+id/welcomeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome to QuickBites!"
+                    android:textSize="25sp"
+                    android:textColor="@color/gold"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="9dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+            <!-- Today's Special Image Slider -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:background="@color/maroon">
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Today's Specials:"
+                    android:textColor="@color/gold"
+                    android:textSize="20sp"
+                    android:background="@color/maroon"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"/>
+
+                <Button
+                    android:id="@+id/btnAddItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:text="Click to Add"
+                    android:textColor="@color/gold"
+                    android:padding="12dp"
+                    android:layout_gravity="center"/>
+
+
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:clipToPadding="false"
+                android:padding="16dp"
+                android:background="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Counter:"
+                android:textColor="@color/gold"
+                android:textSize="20sp"
+                android:background="@color/maroon"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4"
+                android:padding="10dp"
+                android:alignmentMode="alignMargins">
+
+                <!-- Breakfast -->
+                <FrameLayout
+                    android:id="@+id/breakfastButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/breakfast"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Breakfast"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- South Indian -->
+                <FrameLayout
+                    android:id="@+id/southIndianButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/south_indian"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="South Indian"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- Chinese -->
+                <FrameLayout
+                    android:id="@+id/lunchButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/chinese"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chinese"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- North Indian -->
+                <FrameLayout
+                    android:id="@+id/northIndianButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="0"
+                    android:layout_column="3"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/northindian"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="North Indian"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- Sandwiches -->
+                <FrameLayout
+                    android:id="@+id/sandwichesButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/sandwiches"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sandwiches"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- Hot Beverages -->
+                <FrameLayout
+                    android:id="@+id/hotBeveragesButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/hotbeverages"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Hot Beverages"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- Shakes -->
+                <FrameLayout
+                    android:id="@+id/shakesButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="1"
+                    android:layout_column="2"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/shakes"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Shakes"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+                <!-- Juices-->
+                <FrameLayout
+                    android:id="@+id/juicesButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_row="1"
+                    android:layout_column="3"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/juices"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Juices"
+                        android:textColor="@color/gold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="85dp"/>
+                </FrameLayout>
+
+            </GridLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+
+            <!-- Footer -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/black"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:elevation="4dp">
+
+                <!-- Full Menu Button -->
+                <LinearLayout
+                    android:id="@+id/fullMenuButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/menu_image"
+                        android:layout_gravity="center_horizontal"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit Menu"
+                        android:textColor="@color/gold"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
+                <!-- Cart Button -->
+                <LinearLayout
+                    android:id="@+id/ordersButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/cart_image"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View All Orders"
+                        android:textColor="@color/gold"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Profile Button -->
+                <LinearLayout
+                    android:id="@+id/profileButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/profile_image"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Profile"
+                        android:textColor="@color/gold"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
     </LinearLayout>
 
-
-    <!-- Today's Special Image Slider -->
+    <!-- Navigation drawer content -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/navigationDrawer"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:orientation="vertical"
-        android:layout_weight="2"
-        android:background="@color/maroon">
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today's Specials:"
-            android:textColor="@color/gold"
-            android:textSize="20sp"
-            android:background="@color/maroon"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"/>
+        android:background="@android:color/black"
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/registerButton"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:text="Click to Add"
-            android:textColor="@color/gold"
-            android:padding="12dp"
-            android:layout_gravity="center"/>
+            android:text="Name"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
 
+        <Button
+            android:id="@+id/navHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maroon"
+            android:textColor="@color/white"
+            android:text="Home" />
 
+        <Button
+            android:id="@+id/navYourProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maroon"
+            android:textColor="@color/white"
+            android:text="Your Profile" />
+
+        <Button
+            android:id="@+id/navPastOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maroon"
+            android:textColor="@color/white"
+            android:text="Past Orders" />
+
+        <Button
+            android:id="@+id/navSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maroon"
+            android:textColor="@color/white"
+            android:text="Settings" />
+
+        <Button
+            android:id="@+id/navViewFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maroon"
+            android:textColor="@color/white"
+            android:text="View Feedback" />
+
+        <Button
+            android:id="@+id/navLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maroon"
+            android:textColor="@color/white"
+            android:text="Logout" />
     </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/imageSlider"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:clipToPadding="false"
-        android:padding="16dp"
-        android:background="@color/black"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Counter:"
-        android:textColor="@color/gold"
-        android:textSize="20sp"
-        android:background="@color/maroon"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal"/>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:padding="10dp"
-        android:alignmentMode="alignMargins">
-
-        <!-- Breakfast -->
-        <FrameLayout
-            android:id="@+id/breakfastButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/breakfast"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Breakfast"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- South Indian -->
-        <FrameLayout
-            android:id="@+id/southIndianButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/south_indian"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="South Indian"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- Chinese -->
-        <FrameLayout
-            android:id="@+id/lunchButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/chinese"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chinese"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- North Indian -->
-        <FrameLayout
-            android:id="@+id/northIndianButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="3"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/northindian"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="North Indian"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- Sandwiches -->
-        <FrameLayout
-            android:id="@+id/sandwichesButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/sandwiches"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sandwiches"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- Hot Beverages -->
-        <FrameLayout
-            android:id="@+id/hotBeveragesButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/hotbeverages"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Hot Beverages"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- Shakes -->
-        <FrameLayout
-            android:id="@+id/shakesButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/shakes"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Shakes"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-        <!-- Juices-->
-        <FrameLayout
-            android:id="@+id/juicesButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="3"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/juices"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Juices"
-                android:textColor="@color/gold"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="85dp"/>
-        </FrameLayout>
-
-    </GridLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-    <!-- Footer -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/black"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:elevation="4dp">
-
-        <!-- Full Menu Button -->
-        <LinearLayout
-            android:id="@+id/fullMenuButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/menu_image"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="fitCenter"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit Menu"
-                android:textColor="@color/gold"
-                android:textSize="12sp"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
-
-        <!-- Cart Button -->
-        <LinearLayout
-            android:id="@+id/ordersButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/cart_image"
-                android:layout_gravity="center_horizontal"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View All Orders"
-                android:textColor="@color/gold"
-                android:textSize="12sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-
-        <!-- Profile Button -->
-        <LinearLayout
-            android:id="@+id/profileButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/profile_image"
-                android:layout_gravity="center_horizontal"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                android:textColor="@color/gold"
-                android:textSize="12sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>

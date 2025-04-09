@@ -4,22 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="8dp">
+    android:padding="16dp">
 
-    <!-- Image of the dish -->
     <ImageView
-        android:id="@+id/sliderImage"
-        android:layout_width="250dp"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"/>
+        android:id="@+id/slider_image"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"/>
 
-    <!-- Dish Name -->
     <TextView
-        android:id="@+id/dishName"
+        android:id="@+id/slider_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dish Name"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:paddingTop="8dp"/>
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:gravity="center"/>
 </LinearLayout>
