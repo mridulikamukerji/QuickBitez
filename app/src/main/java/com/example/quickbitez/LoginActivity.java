@@ -75,11 +75,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, CatererDashboard.class);
                     startActivity(intent);
+                    finish();
                 } else if (!isCaterer && "Customer".equals(userType)) {
                     Log.d("LoginActivity", "Redirecting to CustomerDashboard");
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, CustomerDashboard.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     Log.e("LoginActivity", "User type mismatch: isCaterer=" + isCaterer + ", userType=" + userType);
                     Toast.makeText(LoginActivity.this, "Incorrect user type selection", Toast.LENGTH_SHORT).show();

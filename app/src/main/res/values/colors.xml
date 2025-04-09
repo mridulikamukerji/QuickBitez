@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="beige">#EDE8D0</color>
     <color name="gold">#cdbf6f</color>
     <color name="maroon">#450000</color>
+    <color name="beige_background">#f5ece0</color>
 </resources>
